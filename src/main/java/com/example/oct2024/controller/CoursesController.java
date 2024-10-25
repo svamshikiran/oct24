@@ -1,12 +1,10 @@
 package com.example.oct2024.controller;
 
 import com.example.oct2024.model.Courses;
+import com.example.oct2024.model.Duration;
 import com.example.oct2024.service.CoursesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +23,20 @@ public class CoursesController {
     @GetMapping("/get/{courseid}")
     public Courses getCoursesById(@PathVariable("courseid") int courseid){
         return coursesService.getCourseById(courseid);
+    }
+
+    @PostMapping("/add/courses")
+    public void addCourses(@RequestBody Courses courses){
+        coursesService.addCourses(courses);
+    }
+
+    @PostMapping("/add/duration")
+    public void addDuration(@RequestBody Duration duration){
+        coursesService.addDuration(duration);
+    }
+
+    @GetMapping("/all/duration")
+    public List<Duration> getAllDuration(){
+        return coursesService.getAllDurations();
     }
 }

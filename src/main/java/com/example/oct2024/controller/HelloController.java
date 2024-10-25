@@ -1,11 +1,18 @@
 package com.example.oct2024.controller;
 
 import com.example.oct2024.model.Message;
+import com.example.oct2024.service.CalculatorService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController // Creates an object of the Controller during server start up - IOC (Inversion Of Control)
 @RequestMapping("/v1/hello") // request mapping the controller to the URI
+@Slf4j
 public class HelloController {
+
+    @Autowired
+    CalculatorService calculatorService;
 
     // http://127.0.0.1:9000/oct2024/greet
     // first token - v1/hello
@@ -40,6 +47,8 @@ public class HelloController {
 
     @PostMapping("/post")
     public String postMessage(@RequestBody Message message){
+        log.info("INSIDE THE POST MESSAGE: Input received - {} {}", message.getMsgId(), message.getMsgString());
+        calculatorService.postMessage(message);
         return message.toString();
     }
 

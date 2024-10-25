@@ -1,9 +1,11 @@
 package com.example.oct2024.service;
 
 import com.example.oct2024.dto.StudentSpecDto;
+import com.example.oct2024.kafka.MessagePublisher;
 import com.example.oct2024.mapper.StudentRowMapper;
 import com.example.oct2024.model.Student;
 import com.example.oct2024.repository.StudentRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class StudentService {
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    MessagePublisher messagePublisher;
 
     public List<Student> getAllStudents(){
         System.out.println("INSIDE STUDENT SERVICE");
@@ -45,7 +50,8 @@ public class StudentService {
         return studentRepository.findByName(name);
     }
 
-    public void upsertStudent(Student student){
+    public void upsertStudent(Student student) throws JsonProcessingException {
+        //messagePublisher.sendSimpleMessage(student);
         studentRepository.save(student);
         //insert into student values(??????);
     }
